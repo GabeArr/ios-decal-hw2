@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     // TODO: Ensure that resultLabel gets updated.
     //       Modify this one or create your own.
     func updateResultLabel(_ content: String) {
-        print("Update me like one of those PCs")
+//        print("Update me like one of those PCs")
         print(content)
         resultLabel.text = content
     }
@@ -140,6 +140,7 @@ class ViewController: UIViewController {
         } else {
             let lastElem = numbersAndOperators[numbersAndOperators.count - 1]
             if (lastElem.1 == "operator") {
+                print("ugh why is this happening")
                 numbersAndOperators.append((value: sender.content, type: "input"))
                 updateResultLabel(sender.content)
             }else if (lastElem.1 != "calculation" && lastElem.0.characters.count < 7) {
@@ -168,8 +169,6 @@ class ViewController: UIViewController {
                 numbersAndOperators.append((value: sender.content, type: "operator"))
             } else if (numbersAndOperators.count == 3) {
                 let calculation = calculate()
-                
-                
                 numbersAndOperators.removeAll()
                 numbersAndOperators.append((value: calculation, type: "calculation"))
                 if (sender.content != "=") {
@@ -227,9 +226,12 @@ class ViewController: UIViewController {
         print("The number \(sender.content) was pressed")
         
         if (sender.content == "0"){
+            for elem in numbersAndOperators{
+                print(elem)
+            }
             if (!numbersAndOperators.isEmpty) {
                 let lastElem = numbersAndOperators[numbersAndOperators.count - 1]
-                if (lastElem.1 != "calculation" && lastElem.0.characters.count < 7 && lastElem.0 != "0"){
+                if (lastElem.1 != "calculation" && lastElem.1 != "operator" && lastElem.0.characters.count < 7 && lastElem.0 != "0"){
                     print("first if statement for 0")
                     numbersAndOperators.removeLast()
                     numbersAndOperators.append((value: lastElem.0 + sender.content, type: "input"))
